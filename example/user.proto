@@ -19,6 +19,7 @@ message LoginResponse {
     bool success = 2;
 }
 
+// 将类型封装到request和response中
 service UserServiceRpc {
     rpc Login(LoginRequest) returns (LoginResponse);
 }

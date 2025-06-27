@@ -25,7 +25,7 @@ public:
     void Login(::google::protobuf::RpcController* controller,
                        const ::fixbug::LoginRequest* request,
                        ::fixbug::LoginResponse* response,
-                       ::google::protobuf::Closure* done)
+                       ::google::protobuf::Closure* done) override
     {
         // 框架给业务上报了请求参数LoginRequest，应用获取相应数据做本地业务
         std::string name = request->name();
@@ -48,7 +48,7 @@ public:
 
 int main(int argc, char** argv)
 {
-    // 调用框架的初始化操作
+    // 调用框架的初始化操作 provider -i config.conf
     MpRpcApplication::Init(argc, argv);
 
     // provider是一个rpc网络服务对象
