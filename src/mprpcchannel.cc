@@ -71,7 +71,7 @@ void MpRpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     std::cout << "rpc_header_str" << rpc_header_str << std::endl;
     std::cout << "service_name: " << service_name << std::endl;
     std::cout << "method_name: " << method_name << std::endl;
-    std::cout << "args_str: " << args_str << std::endl;
+    std::cout << "args_str: " << args_str << std::endl; // 序列化后的参数
     std::cout << "==========================" << std::endl;
     
     // 使用rpc编程，完成rpc方法的远程调用。
@@ -115,9 +115,10 @@ void MpRpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
 
 
     // 反序列化rpc调用的响应数据
-    std::string response_str(recv_buf,recv_size);
-    if(!response->ParseFromString(response_str)){
-        std::cout << "parse response error, response_str" << response_str <<std::endl;
+    // std::string response_str(recv_buf,recv_size); // bug,recv_buf遇到\0构造就结束
+    // if(!response->ParseFromString(response_str)){
+    if(!response->ParseFromArray(recv_buf, recv_size)){
+        std::cout << "parse response error, response_str" << recv_buf <<std::endl;
         close(client_fd);
         return;
     }

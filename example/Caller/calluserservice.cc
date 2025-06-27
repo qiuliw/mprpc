@@ -22,7 +22,7 @@ int main(int argc, char** argv){
 
     // rpc调用完成，读调用的结果
     if(response.result().errcode() == 0){
-        std::cout << "rpc login response：" << response.success() << std::endl;
+        std::cout << "rpc login response success：" << response.success() << std::endl;
     }else{
         std::cout << "rpc login response error：" << response.result().errmsg() << std::endl;
     }
