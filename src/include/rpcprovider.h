@@ -9,8 +9,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "user.pb.h"
-
 // 框架提供的专门用于rpc的rpc服务发布的网络对象类
 class RpcProvider {
 public:
