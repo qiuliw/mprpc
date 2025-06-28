@@ -11,10 +11,13 @@
 ![alt text](assets/README/image-1.png)
 
 对于客户端，方法首先暴露给用户调用，之后进行封装发送（MpRpcChannel）
+    RpcController控制信息，对rpc框架内请求过程中出现的错误进行封装，暴露给用户进行错误处理
 对于服务端，方法签名解析完成后(RpcProvider)，调用本地方法
 
-RpcController控制信息，对rpc框架内请求过程中出现的错误进行封装，暴露给用户进行错误处理
+![alt text](assets/README/image-2.png)
 
+使用条件变量进行线程间通信。多生产单消费模型。日志业务的极低概率的虚假唤醒是可以忍受的
+也可以使用`kafka`分布式日志存储
 
 ## 使用
 

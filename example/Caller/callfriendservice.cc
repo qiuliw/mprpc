@@ -1,10 +1,12 @@
 #include <iostream>
+#include "logger.h"
 #include "mprpcapplication.h"
 #include "friend.pb.h" // 使用pb的数据格式
 #include "mprpccontroller.h"
 
 int main(int argc, char** argv)
 {
+
     // 整个程序启动后，想使用mprpc框架来享受rpc服务，必须先调用框架的初始化函数（只初始化一次）。启动muduo，序列化功能等
     MpRpcApplication::Init(argc, argv);
 

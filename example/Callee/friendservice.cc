@@ -1,4 +1,5 @@
 #include "friend.pb.h"
+#include "logger.h"
 #include "mprpcapplication.h"
 #include "rpcprovider.h"
 #include <iostream>
@@ -6,7 +7,7 @@
 
 class FriendService : public fixbug::FriendServiceRpc {
 public:
-
+    
     std::vector<std::string> GetFriendList(uint32_t userid)
     {
         std::cout << "do GetFriendList service! userid: " << userid << std::endl;
@@ -35,7 +36,10 @@ public:
 };
 
 int main(int argc, char** argv)
-{
+{   
+    LOG_INFO("first log message");
+    Log_ERROR("%s:%s:%d",__FILE__,__FUNCTION__,__LINE__);
+
     MpRpcApplication::Init(argc, argv);
     RpcProvider provider; 
     provider.NotifyService(new FriendService());
