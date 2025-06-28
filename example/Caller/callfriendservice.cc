@@ -1,7 +1,7 @@
 #include <iostream>
 #include "mprpcapplication.h"
 #include "friend.pb.h" // 使用pb的数据格式
-#include "mprpcchannel.h"
+#include "mprpccontroller.h"
 
 int main(int argc, char** argv)
 {
@@ -17,20 +17,25 @@ int main(int argc, char** argv)
     request.set_userid(1000);
     // rpc方法的响应
     fixbug::GetFriendListResponse response;
+
     // 调用rpc方法，同步的rpc调用过程，MpRpcChannel->Method
-    stub.GetFriendList(nullptr, &request, &response, nullptr);
+    MpRpcController controller; // 控制信息，客户端本地框架内发生的错误进行描述。
+    stub.GetFriendList(&controller, &request, &response, nullptr);
 
     // rpc调用完成，读调用的结果
-    if (response.result().errcode() == 0)
-    {
-        // 遍历response.friends()
-        for (int i = 0; i < response.friends_size(); i++)
+    if(controller.Failed()){
+        std::cout << controller.ErrorText() << std::endl;
+    }else{
+        if (response.result().errcode() == 0)
         {
-            std::cout << "friendname:" << response.friends(i) << std::endl;
+            // 遍历response.friends()
+            for (int i = 0; i < response.friends_size(); i++)
+            {
+                std::cout << "friendname:" << response.friends(i) << std::endl;
+            }
+        }else{
+            std::cout << response.result().errmsg() << std::endl;
         }
     }
-    else
-    {
-        std::cout << response.result().errmsg() << std::endl;
-    }
+
 }

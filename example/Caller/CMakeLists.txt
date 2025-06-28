@@ -1,5 +1,5 @@
 # set(SRC_LIST calluserservice.cc ../user.pb.cc)
-set(SRC_LIST callfriendservice.cc ../friend.pb.cc)
+set(SRC_LIST callfriendservice.cc ../friend.pb.cc )
 
 add_executable(consumer ${SRC_LIST}) # 将源码添加到可执行文件（还需要链接第三方库）
 
