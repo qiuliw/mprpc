@@ -13,6 +13,8 @@
 
 ![alt text](assets/README/无标题-2025-01-22-1759.svg)
 
+![alt text](assets/README/image-4.png)
+
 对于客户端，方法首先暴露给用户调用，之后进行封装发送（MpRpcChannel）
     RpcController控制信息，对rpc框架内请求过程中出现的错误进行封装，暴露给用户进行错误处理
 对于服务端，方法签名解析完成后(RpcProvider)，调用本地方法
