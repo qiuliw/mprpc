@@ -8,4 +8,4 @@ aux_source_directory(. SRC_LIST) # 获取当前目录下所有源文件，生成
 
 add_library(mprpc ${SRC_LIST})
 
-target_link_libraries(mprpc muduo_net muduo_base pthread)
+target_link_libraries(mprpc muduo_net muduo_base pthread zookeeper_mt)

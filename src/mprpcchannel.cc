@@ -16,6 +16,7 @@
 #include "mprpcapplication.h"
 #include "rpcheader.pb.h"
 #include "mprpccontroller.h"
+#include "zookeeperutil.h"
 
 
 
@@ -89,11 +90,28 @@ void MpRpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     }
 
     // 读取配置文件rpcserver的信息
-    std::string ip = MpRpcApplication::GetInstance().GetConfig().Load("rpcserverip");
-    uint16_t port = atoi(MpRpcApplication::GetInstance().GetConfig().Load("rpcserverport").c_str());
+    // std::string ip = MpRpcApplication::GetInstance().GetConfig().Load("rpcserverip");
+    // uint16_t port = atoi(MpRpcApplication::GetInstance().GetConfig().Load("rpcserverport").c_str());
 
-
+    // 从zk获取rpcserver的host和port
+    ZkClient zkCli;
+    zkCli.Start();
+    std::string method_path = "/" + service_name + "/" + method_name;
+    std::string host_data = zkCli.GetData(method_path.c_str());
+    if (host_data == "")
+    {
+        controller->SetFailed(method_path + " is not exist!");
+        return;
+    }
+    int idx = host_data.find(":");
+    if(idx == -1){
+        controller->SetFailed(method_path + " address is invalid!");
+        return;
+    }
+    std::string ip = host_data.substr(0, idx);
+    uint16_t port = atoi(host_data.substr(idx + 1, host_data.size() - idx).c_str());
     struct sockaddr_in server_addr;
+
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip.c_str());
