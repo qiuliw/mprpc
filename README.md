@@ -56,6 +56,15 @@ cd ../bin
 3. caller fixbug::UserServiceRpc_Stub stub(new MpRpcChannel()); 连接节点，调用远程rpc方法，stub提供service签名
 
 
+启动zkServer -p 2181
+```sh
+./zkServer.sh start
+```
+运行 mprpc server client
+```sh
+qiuliw@X:~/Dev/mprpc$ ./provider -i test.conf
+qiuliw@X:~/Dev/mprpc/bin$ ./consumer -i test.conf 
+```
 
 
 

@@ -1,5 +1,5 @@
-*.pb.h
-*.pb.cc
+# *.pb.h
+# *.pb.cc
 build
 bin
 lib
